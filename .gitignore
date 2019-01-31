@@ -1,0 +1,5 @@
+/backend/out
+/backend/.gradle
+/backend/.idea
+/backend/gradle
+/frontend/node_modules

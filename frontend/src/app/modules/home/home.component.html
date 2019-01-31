@@ -1,0 +1,47 @@
+﻿<h1>Hi {{currentUser.firstName}}!</h1>
+
+<ng-container *ngIf="links">
+    <h3>Your links : </h3>
+    <ul>
+        <li *ngFor="let link of links">
+            {{link.url}} - <a (click)="deleteLink(link.id)" class="text-danger">Delete</a>
+            <ul>
+                <li *ngFor="let tag of link.tags" style="display:inline; padding: 5px;">
+                    <span class="badge badge-info" style="padding-right: 10px">{{tag}}</span>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</ng-container>
+<br>
+<div>
+
+    <h2>Add new link </h2>
+
+    <div class="col-lg-6">
+        <div class="input-group">
+            <input [(ngModel)]="linkurl" type="text" class="form-control" placeholder="Add link ...">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button" (click)="analyseLink()">Go!</button>
+            </span>
+        </div>
+    </div>
+
+    
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">@</span>
+        </div>
+        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+      </div>
+    
+    <ng-container *ngIf="tags">
+        <ul>
+            <li *ngFor="let tag of tags" style="display:inline; padding: 5px;"> 
+                <button type="button" class="btn btn-info" style="padding-right: 10px;padding-top: 10px">{{tag}}</button>        
+            </li>
+        </ul>
+    </ng-container>
+
+
+</div>
