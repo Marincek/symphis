@@ -1,5 +1,7 @@
 ﻿import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { TagInputModule } from 'ngx-chips';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed for tag lib
 import { ReactiveFormsModule }    from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -22,7 +24,9 @@ import { FakeBackendInterceptor } from './core/interceptors';
         ReactiveFormsModule,
         HttpClientModule,
         routing,
-        FormsModule
+        FormsModule,
+        TagInputModule, 
+        BrowserAnimationsModule
     ],
     declarations: [
         AppComponent,

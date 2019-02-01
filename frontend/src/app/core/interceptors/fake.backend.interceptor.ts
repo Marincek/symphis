@@ -5,10 +5,11 @@ import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
-    
-    TOKEN = 'some-fake-token';
 
-    constructor() { 
+    TOKEN = 'some-fake-token';
+    AUTH_HEADER = 'x-auth-token';
+
+    constructor() {
         // localStorage.clear();
     }
 
@@ -16,9 +17,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         // array in local storage for registered users
         let users: any[] = JSON.parse(localStorage.getItem('users')) || [];
         let links: any[] = [{ id: 101, url: 'www.somelink.com', tags: ['tag1', 'tag2', 'tag3'] },
-                            { id: 102, url: 'www.asdasda.com', tags: ['tagqw23', '234235', 'sdfsd'] },
-                            { id: 103, url: 'www.asdasfdfs.com', tags: ['asdas', 'sdfg', 'ssdfs'] }
-                            ];
+        { id: 102, url: 'www.asdasda.com', tags: ['tagqw23', '234235', 'sdfsd'] },
+        { id: 103, url: 'www.asdasfdfs.com', tags: ['asdas', 'sdfg', 'ssdfs'] }
+        ];
 
         // wrap in delayed observable to simulate server api call
         return of(null).pipe(mergeMap(() => {
@@ -71,9 +72,21 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             // get links
             if (request.url.endsWith('/links') && request.method === 'GET') {
                 // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
-                console.log('/links '+ request.headers.get('Authorization'));
-                if (request.headers.get('Authorization') === 'Bearer '+this.TOKEN) {
+                console.log('/links ' + request.headers.get(this.AUTH_HEADER));
+                if (request.headers.get(this.AUTH_HEADER) === this.TOKEN) {
                     return of(new HttpResponse({ status: 200, body: links }));
+                } else {
+                    // return 401 not authorised if token is null or invalid
+                    return throwError({ status: 401, error: { message: 'Unauthorised' } });
+                }
+            }
+
+            // add link
+            if (request.url.endsWith('/links') && request.method === 'POST') {
+                // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
+                console.log('/links ' + request.headers.get(this.AUTH_HEADER));
+                if (request.headers.get(this.AUTH_HEADER) === this.TOKEN) {
+                    return of(new HttpResponse({ status: 200, body: request.body }));
                 } else {
                     // return 401 not authorised if token is null or invalid
                     return throwError({ status: 401, error: { message: 'Unauthorised' } });
@@ -83,7 +96,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             // delete user
             if (request.url.match(/\/users\/\d+$/) && request.method === 'DELETE') {
                 // check for fake auth token in header and return user if valid, this security is implemented server side in a real application
-                if (request.headers.get('Authorization') === 'Bearer '+this.TOKEN) {
+                if (request.headers.get(this.AUTH_HEADER) === this.TOKEN) {
                     // find user by id in users array
                     let urlParts = request.url.split('/');
                     let id = parseInt(urlParts[urlParts.length - 1]);

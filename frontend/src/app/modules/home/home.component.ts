@@ -1,20 +1,40 @@
 ﻿import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { TagInputModule } from 'ngx-chips';
+import { Observable, of } from 'rxjs';
 import { User, Link } from '@/shared/models';
 import { LinkService } from '@/core/http';
 import { AnalysisService } from '@/core/services';
 import { AuthenticationService } from '@/core/authentication';
 
-@Component({ templateUrl: 'home.component.html' })
+TagInputModule.withDefaults({
+    tagInput: {
+        placeholder: 'Add a new tag',
+        // add here other default values for tag-input
+    },
+    dropdown: {
+        displayBy: 'my-display-value',
+        // add here other default values for tag-input-dropdown
+    }
+});
+
+@Component({ 
+    selector: 'app-root',
+    styleUrls: ['home.component.css'],
+    templateUrl: 'home.component.html' 
+})
 export class HomeComponent implements OnInit, OnDestroy {
+    
     currentUser: User;
     currentUserSubscription: Subscription;
     links: Link[];
     linkurl: string;
-    tags: string[];
+    analysisTags: string[];
+    linkTags: string[];
+
+    public getTagsForLinkLoading = false;
+    public getTagsForLinkButtonText: string = 'Get Tags';
 
     private tagAnalysisObservable : Observable<any[]> ; 
 
@@ -22,10 +42,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
             this.currentUser = user;
         });
-        this.linkurl = "https://www.androidcentral.com/samsung-galaxy-s10";
     }
 
     ngOnInit() {
+        this.linkurl = "https://www.androidcentral.com/samsung-galaxy-s10";
+        this.linkTags = ["samsung","galaxy","sometag"];
         this.loadAllLinks();
     }
 
@@ -39,12 +60,35 @@ export class HomeComponent implements OnInit, OnDestroy {
         });
     }
 
-    analyseLink() {
-        this.analysisService.analyse(this.linkurl)
-            // .pipe(map(data => Array.from(data.values()))
-            .subscribe(data => { 
-                this.tags = data;
-            });
+    getTagsForLink() {
+        this.getTagsForLinkLoading = true;
+        this.getTagsForLinkButtonText = 'Loading ...';
+
+        // this.analysisService.analyse(this.linkurl)
+        //     .subscribe(data => { 
+        //         this.analysisTags = data;
+        //         this.getTagsForLinkLoading = false;
+        //         this.getTagsForLinkButtonText = 'Get Tags';
+        //     });
+
+        
+        var mocked = ["samplTag1", "samplTag2", "samplTag3"];
+        return of(mocked).subscribe(data => {
+            this.analysisTags = data;
+            this.getTagsForLinkLoading = false;
+            this.getTagsForLinkButtonText = 'Get Tags';
+        });;
+    }
+
+    addLink(){
+        var linkData = new Link();
+        linkData.url = this.linkurl;
+        linkData.tags = this.linkTags;
+
+        this.linkService.add(linkData)
+            .subscribe(data => {
+                console.log('Link added '+ data.url)
+            });;
     }
 
     private loadAllLinks() {

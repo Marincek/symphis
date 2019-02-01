@@ -1,7 +1,5 @@
 import { TextService } from '@/core/http';
 import { Injectable } from '@angular/core';
-import { Router, NavigationStart } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {default as stopWords} from './stop-words-en.json';
 
@@ -9,7 +7,7 @@ import {default as stopWords} from './stop-words-en.json';
 @Injectable({ providedIn: 'root' })
 export class AnalysisService {
 
-  constructor(private proxyService: TextService) { }
+  constructor(private proxyService: TextService) {}
 
   analyse(url: string){
     var html = this.proxyService.getContent(url);
@@ -41,7 +39,7 @@ export class AnalysisService {
 
 
   private removeStopWords(words: string[]){
-    return this.difference(words, stopWords.list);
+    return this.difference(words, stopWords);
   }
 
   private difference(a1: string[], a2: string[]) {
