@@ -1,6 +1,5 @@
 import com.marincek.sympis.domain.Link;
 import com.marincek.sympis.domain.User;
-import com.marincek.sympis.repository.LinkRepository;
 import com.marincek.sympis.service.LinkService;
 import org.junit.Test;
 import org.junit.runner.RunWith;

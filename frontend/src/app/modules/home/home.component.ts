@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     linkurl: string;
     linkTags: string[] = [];
-    linkTagsSuggested: string[] = [];
+    linkTagsSuggested: string[];
 
     public getTagsForLinkLoading = false;
     public getTagsForLinkButtonText: string = 'Get Tags';
@@ -98,7 +98,7 @@ export class HomeComponent implements OnInit, OnDestroy {
                     console.log('Link added ' + resLink.url)
                     this.links.push(resLink);
                     //reset tags
-                    this.linkTagsSuggested = [];
+                    this.linkTagsSuggested = null;
                     this.linkTags = [];
                     this.linkurl = "";
                 },
