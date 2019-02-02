@@ -5,13 +5,15 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserInfoResponse {
 
+    private String firstName;
     private String username;
     private String token;
     private String exception;
 
-    public UserInfoResponse(String username, String token) {
-        this.token = token;
+    public UserInfoResponse(String username, String firstName, String token) {
         this.username = username;
+        this.firstName = firstName;
+        this.token = token;
     }
 
     public UserInfoResponse(Exception exception) {

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/space/links")
+@RequestMapping(value = "/space/links", produces = "application/json" , consumes = "application/json")
 public class LinksController {
 
     private LinkService linksService;
@@ -54,6 +54,17 @@ public class LinksController {
         } catch (MalformedURLException | UnsupportedEncodingException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value="/{id}", method = {RequestMethod.DELETE})
+    public ResponseEntity deleteLink(@PathVariable("id") Long id) {
+        try {
+            linksService.delete(id);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
     }
 

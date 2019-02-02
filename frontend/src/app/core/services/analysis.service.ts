@@ -1,13 +1,19 @@
 import { TextService } from '@/core/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
-import {default as stopWords} from './stop-words-en.json';
+import * as stopWordsJson from './stop-words-en.json';
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable({ providedIn: 'root' })
-export class AnalysisService {
+export class AnalysisService implements OnInit{
 
-  constructor(private proxyService: TextService) {}
+  stopWords: string[];
+
+  constructor(private proxyService: TextService, private http: HttpClient) {}
+
+  ngOnInit(){
+  }
 
   analyse(url: string){
     var html = this.proxyService.getContent(url);
@@ -39,7 +45,11 @@ export class AnalysisService {
 
 
   private removeStopWords(words: string[]){
-    return this.difference(words, stopWords);
+    return this.difference(words, this.getStopWordsArray());
+  }
+
+  private getStopWordsArray(): Array<string> {
+    return JSON.parse(JSON.stringify(stopWordsJson))
   }
 
   private difference(a1: string[], a2: string[]) {

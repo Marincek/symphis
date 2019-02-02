@@ -6,13 +6,26 @@ import java.util.List;
 
 public class TagValidator implements ConstraintValidator<TagConstraint, List<String>> {
 
+    private String messageNullOrEmpty;
+    private String messageHtmlTag;
+
     @Override
     public void initialize(TagConstraint constraintAnnotation) {
-
+        messageNullOrEmpty = constraintAnnotation.messageNullOrEmpty();
+        messageHtmlTag = constraintAnnotation.message();
     }
 
     @Override
     public boolean isValid(List<String> values, ConstraintValidatorContext context) {
-        return values.stream().noneMatch(s -> s.matches("<[^>]*>"));
+        context.disableDefaultConstraintViolation();
+        if (values == null || values.isEmpty()) {
+            context.buildConstraintViolationWithTemplate(messageNullOrEmpty).addConstraintViolation();
+            return false;
+        }
+        if (values.stream().anyMatch(s -> s.matches("<[^>]*>"))) {
+            context.buildConstraintViolationWithTemplate(messageHtmlTag).addConstraintViolation();
+            return false;
+        }
+        return true;
     }
 }

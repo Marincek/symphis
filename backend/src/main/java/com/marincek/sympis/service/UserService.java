@@ -9,4 +9,5 @@ public interface UserService extends UserDetailsService {
 
     User findByUsername(String username);
 
+    String getFirstName(String username);
 }

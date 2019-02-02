@@ -2,11 +2,11 @@
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { TagInputModule } from 'ngx-chips';
-import { Observable, of } from 'rxjs';
 import { User, Link } from '@/shared/models';
 import { LinkService } from '@/core/http';
 import { AnalysisService } from '@/core/services';
 import { AuthenticationService } from '@/core/authentication';
+import { AlertService } from '@/core/services';
 
 TagInputModule.withDefaults({
     tagInput: {
@@ -19,34 +19,38 @@ TagInputModule.withDefaults({
     }
 });
 
-@Component({ 
+@Component({
     selector: 'app-root',
     styleUrls: ['home.component.css'],
-    templateUrl: 'home.component.html' 
+    templateUrl: 'home.component.html'
 })
 export class HomeComponent implements OnInit, OnDestroy {
-    
+
     currentUser: User;
     currentUserSubscription: Subscription;
+
     links: Link[];
+
     linkurl: string;
-    analysisTags: string[];
-    linkTags: string[];
+    linkTags: string[] = [];
+    linkTagsSuggested: string[] = [];
 
     public getTagsForLinkLoading = false;
     public getTagsForLinkButtonText: string = 'Get Tags';
 
-    private tagAnalysisObservable : Observable<any[]> ; 
+    constructor(
+        private authenticationService: AuthenticationService,
+        private linkService: LinkService,
+        private analysisService: AnalysisService,
+        private alertService: AlertService) {
 
-    constructor(private authenticationService: AuthenticationService, private linkService: LinkService, private analysisService: AnalysisService) {
         this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
             this.currentUser = user;
         });
     }
 
     ngOnInit() {
-        this.linkurl = "https://www.androidcentral.com/samsung-galaxy-s10";
-        this.linkTags = ["samsung","galaxy","sometag"];
+        this.linkurl = "https://www.simplyrecipes.com/recipes/sun_dried_tomato_pesto/";
         this.loadAllLinks();
     }
 
@@ -55,45 +59,62 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     deleteLink(id: number) {
-        this.linkService.delete(id).pipe(first()).subscribe(() => {
-            this.loadAllLinks()
-        });
+        this.linkService.delete(id).pipe(first())
+            .subscribe(() => {
+                this.links = this.links.filter(function (value, index, arr) {
+                    return value.id != id;
+                })
+            });
     }
 
     getTagsForLink() {
         this.getTagsForLinkLoading = true;
         this.getTagsForLinkButtonText = 'Loading ...';
 
-        // this.analysisService.analyse(this.linkurl)
-        //     .subscribe(data => { 
-        //         this.analysisTags = data;
-        //         this.getTagsForLinkLoading = false;
-        //         this.getTagsForLinkButtonText = 'Get Tags';
-        //     });
-
-        
-        var mocked = ["samplTag1", "samplTag2", "samplTag3"];
-        return of(mocked).subscribe(data => {
-            this.analysisTags = data;
-            this.getTagsForLinkLoading = false;
-            this.getTagsForLinkButtonText = 'Get Tags';
-        });;
+        this.analysisService.analyse(this.linkurl)
+            .subscribe(
+                data => {
+                    this.linkTagsSuggested = data as string[];
+                    this.getTagsForLinkLoading = false;
+                    this.getTagsForLinkButtonText = 'Get Tags';
+                },
+                error => {
+                    this.alertService.error(error);
+                });;
     }
 
-    addLink(){
+    appendSuggetedTag($event: string) {
+        this.linkTags.push($event);
+    }
+
+    addLink() {
         var linkData = new Link();
         linkData.url = this.linkurl;
         linkData.tags = this.linkTags;
 
         this.linkService.add(linkData)
-            .subscribe(data => {
-                console.log('Link added '+ data.url)
-            });;
+            .subscribe(
+                resLink => {
+                    console.log('Link added ' + resLink.url)
+                    this.links.push(resLink);
+                    //reset tags
+                    this.linkTagsSuggested = [];
+                    this.linkTags = [];
+                    this.linkurl = "";
+                },
+                error => {
+                    this.alertService.error(error);
+                });;
     }
 
     private loadAllLinks() {
-        this.linkService.getAll().pipe(first()).subscribe(links => {
-            this.links = links;
-        });
+        this.linkService.getAll()
+            .subscribe(
+                links => {
+                    this.links = links;
+                },
+                error => {
+                    this.alertService.error(error);
+                });
     }
 }

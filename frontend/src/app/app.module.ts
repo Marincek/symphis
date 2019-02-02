@@ -39,7 +39,7 @@ import { FakeBackendInterceptor } from './core/interceptors';
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         // provider used to create fake backend
-        { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true },
+        // { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true },
     ],
     bootstrap: [AppComponent]
 })

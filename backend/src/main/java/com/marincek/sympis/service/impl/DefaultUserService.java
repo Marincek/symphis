@@ -1,6 +1,7 @@
 package com.marincek.sympis.service.impl;
 
 import com.marincek.sympis.domain.User;
+import com.marincek.sympis.domain.exceptions.UnknownUserException;
 import com.marincek.sympis.repository.UserRepository;
 import com.marincek.sympis.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,12 @@ public class DefaultUserService implements UserService {
 
     @Override
     public User findByUsername(String username) {
-        return userRepository.findByUsername(username).get();
+        return userRepository.findByUsername(username).orElseThrow(UnknownUserException::new);
+    }
+
+    @Override
+    public String getFirstName(String username) {
+        return userRepository.findFirstName(username).orElseThrow(UnknownUserException::new);
     }
 
     @Override

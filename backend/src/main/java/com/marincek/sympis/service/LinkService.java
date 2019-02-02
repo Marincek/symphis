@@ -16,4 +16,5 @@ public interface LinkService {
 
     List<String> findAllTagsForUrl(String url) throws MalformedURLException, UnsupportedEncodingException;
 
+    void delete(Long id);
 }

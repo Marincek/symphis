@@ -2,6 +2,7 @@ package com.marincek.sympis.service.impl;
 
 import com.marincek.sympis.domain.Link;
 import com.marincek.sympis.domain.User;
+import com.marincek.sympis.domain.exceptions.ExistingUrlException;
 import com.marincek.sympis.domain.exceptions.UnknownUserException;
 import com.marincek.sympis.repository.LinkRepository;
 import com.marincek.sympis.repository.UserRepository;
@@ -43,13 +44,27 @@ public class DefaultLinkService implements LinkService {
     public Link addLinkForUser(String username, Link link) throws MalformedURLException, UnsupportedEncodingException {
         User user = userRepository.findByUsername(username).orElseThrow(UnknownUserException::new);
         link.setUser(user);
+        link.setUrl(urlNormalizer.normalize(link.getUrl()));
+
+        if(isLinkForUserExisting(username, link)){
+            throw new ExistingUrlException();
+        }
 
         return addLink(link);
+    }
 
+    private boolean isLinkForUserExisting(String username, Link link) throws MalformedURLException, UnsupportedEncodingException {
+        String url = urlNormalizer.normalize(link.getUrl());
+        return linkRepository.findByUserAndUrl(username, url) != null;
     }
 
     @Override
     public List<String> findAllTagsForUrl(String url) throws MalformedURLException, UnsupportedEncodingException {
         return linkRepository.findAllTagsForUrl(urlNormalizer.normalize(url));
+    }
+
+    @Override
+    public void delete(Long id) {
+        linkRepository.deleteById(id);
     }
 }

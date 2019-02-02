@@ -15,7 +15,8 @@ export class TokenInterceptor implements HttpInterceptor {
         if (request.url.startsWith(`${environment.apiUrl}`) && currentUser && currentUser.token) {
             request = request.clone({
                 setHeaders: {
-                  'x-auth-token': `${currentUser.token}`
+                  'x-auth-token': `${currentUser.token}`,
+                  "Content-Type": "application/json"
                 }
               });
         }

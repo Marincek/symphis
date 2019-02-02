@@ -1,4 +1,6 @@
-﻿<h1>Hi {{currentUser.firstName}}!</h1>
+﻿<alert></alert>
+
+<h1>Hi {{currentUser.firstName}}!</h1>
 
 <ng-container *ngIf="links">
     <h3>Your links : </h3>
@@ -21,19 +23,17 @@
     <div class="input-group btn-group-3">
         <input [(ngModel)]="linkurl" type="text" class="form-control" placeholder="Add link ...">
         <div class="btn btn-light" style="display: inline-block;" (click)="getTagsForLink()">
-            <div *ngIf="getTagsForLinkLoading" class="loader" style="display: inline-block;"></div> <span
-                style="display: inline-block;">{{ getTagsForLinkButtonText }}</span>
+            <div *ngIf="getTagsForLinkLoading" class="loader" style="display: inline-block;"></div> <span style="display: inline-block;">
+                {{ getTagsForLinkButtonText }}</span>
         </div>
         <br />
         <br />
     </div>
-    <tag-input [(ngModel)]='linkTags' class="ng-tns-c1-1 ng-pristine ng-valid ng-touched"></tag-input>
+    <tag-input [(ngModel)]="linkTags" class="ng-tns-c1-1 ng-pristine ng-valid ng-touched" [modelAsStrings]="true"></tag-input>
     <br />
-    <br />
-    <ng-container *ngIf="analysisTags">
+    <ng-container *ngIf="linkTagsSuggested">
         Suggested tags :
-        <tag-input [(ngModel)]='linkTags' theme='bootstrap3-info' class="ng-tns-c1-1 ng-pristine ng-valid ng-touched">
-        </tag-input>
+        <tag-input [(ngModel)]="linkTagsSuggested" (onSelect)="appendSuggetedTag($event)" [placeholder]="''" [modelAsStrings]="true" class="ng-tns-c1-1 ng-pristine ng-valid ng-touched bootstrap3-info"></tag-input>
     </ng-container>
 
     <button type="button" class="btn btn-info" (click)="addLink()">Add Link</button>

@@ -10,6 +10,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TagConstraint {
     String message() default "No HTML tags allowed";
+    String messageNullOrEmpty() default "Please provide tags";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
