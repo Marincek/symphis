@@ -3,3 +3,4 @@
 /backend/.idea
 /backend/gradle
 /frontend/node_modules
+/frontend/.vscode
