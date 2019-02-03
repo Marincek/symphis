@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface LinkService {
 
-    List<Link> getAllLinksForUser(String username);
+    List<Link> findAllLinksForUser(String username);
 
     Link addLink(Link link) throws MalformedURLException, UnsupportedEncodingException;
 

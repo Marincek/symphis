@@ -21,8 +21,8 @@ public interface TokenRepository extends JpaRepository<AuthorizationToken, Long>
 
     void deleteByUsername(String username);
 
-    @Modifying
-    @Query("update AuthorizationToken t set t.token = :token, t.lastUsed = :lastUsed where t.username = :username")
+    @Modifying(clearAutomatically = true)
+    @Query("UPDATE AuthorizationToken t SET t.token = :token, t.lastUsed = :lastUsed where t.username = :username")
     void updateToken(@Param("token") String token, @Param("lastUsed") Date lastUsed, @Param("username") String username);
 
 

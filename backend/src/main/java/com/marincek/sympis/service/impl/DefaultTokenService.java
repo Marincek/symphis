@@ -13,8 +13,12 @@ import java.util.UUID;
 @Component
 public class DefaultTokenService implements TokenService {
 
-    @Autowired
     private TokenRepository tokenRepository;
+
+    @Autowired
+    public DefaultTokenService(TokenRepository tokenRepository) {
+        this.tokenRepository = tokenRepository;
+    }
 
     @Override
     public AuthorizationToken createToken(String username) {

@@ -20,9 +20,10 @@ import java.util.Optional;
 @Component
 public class TokenAuthenticationFilter extends GenericFilterBean {
 
+    private final String AUTH_TOKEN_HEADER_NAME = "x-auth-token";
+
     private UserDetailsService customUserDetailsService;
     private TokenService tokenService;
-    private final String AUTH_TOKEN_HEADER_NAME = "x-auth-token";
 
     @Autowired
     public TokenAuthenticationFilter(UserDetailsService userDetailsService, TokenService TokenService) {

@@ -29,7 +29,7 @@ public class LinksController {
     @RequestMapping(method = {RequestMethod.GET})
     public ResponseEntity<List<LinkResponse>> getAllUserLink(Principal principal) {
 
-        List<LinkResponse> links = linksService.getAllLinksForUser(principal.getName()).stream().map(LinkResponse::new).collect(Collectors.toList());
+        List<LinkResponse> links = linksService.findAllLinksForUser(principal.getName()).stream().map(LinkResponse::new).collect(Collectors.toList());
 
         return new ResponseEntity<>(links, HttpStatus.OK);
     }

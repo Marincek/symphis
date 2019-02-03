@@ -21,7 +21,7 @@ public class OracleUrlNormalizer implements UrlNormalizer {
         final URL url;
         try {
             url = new URI(taintedURL).normalize().toURL();
-        } catch (URISyntaxException e) {
+        } catch (URISyntaxException | IllegalArgumentException e) {
             throw new MalformedURLException(e.getMessage());
         }
 

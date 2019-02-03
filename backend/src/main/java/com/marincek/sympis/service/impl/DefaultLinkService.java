@@ -30,13 +30,16 @@ public class DefaultLinkService implements LinkService {
     }
 
     @Override
-    public List<Link> getAllLinksForUser(String username) {
+    public List<Link> findAllLinksForUser(String username) {
         return linkRepository.findAllByUsername(username);
     }
 
     @Override
     public Link addLink(Link link) throws MalformedURLException, UnsupportedEncodingException {
         link.setUrl(urlNormalizer.normalize(link.getUrl()));
+        if(linkRepository.findByUserAndUrl(link.getUser().getUsername(), link.getUrl()) != null){
+            throw new ExistingUrlException();
+        }
         return linkRepository.save(link);
     }
 
@@ -44,18 +47,8 @@ public class DefaultLinkService implements LinkService {
     public Link addLinkForUser(String username, Link link) throws MalformedURLException, UnsupportedEncodingException {
         User user = userRepository.findByUsername(username).orElseThrow(UnknownUserException::new);
         link.setUser(user);
-        link.setUrl(urlNormalizer.normalize(link.getUrl()));
-
-        if(isLinkForUserExisting(username, link)){
-            throw new ExistingUrlException();
-        }
 
         return addLink(link);
-    }
-
-    private boolean isLinkForUserExisting(String username, Link link) throws MalformedURLException, UnsupportedEncodingException {
-        String url = urlNormalizer.normalize(link.getUrl());
-        return linkRepository.findByUserAndUrl(username, url) != null;
     }
 
     @Override

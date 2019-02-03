@@ -22,12 +22,16 @@ import java.util.Arrays;
 @Order(2)
 public class AuthSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
     private UserDetailsService userService;
-    @Autowired
     private TokenAuthenticationFilter tokenAuthenticationFilter;
-    @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public AuthSecurityConfig(UserDetailsService userService, TokenAuthenticationFilter tokenAuthenticationFilter, PasswordEncoder passwordEncoder) {
+        this.userService = userService;
+        this.tokenAuthenticationFilter = tokenAuthenticationFilter;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
