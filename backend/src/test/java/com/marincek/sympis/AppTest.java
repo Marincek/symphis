@@ -1,5 +1,7 @@
 package com.marincek.sympis;
 
+import com.marincek.sympis.controller.AuthenticationControllerIntegrationTest;
+import com.marincek.sympis.controller.LinksControllerIntegrationTest;
 import com.marincek.sympis.repository.LinkRepositoryIntegrationTest;
 import com.marincek.sympis.repository.TokenRepositoryIntegrationTest;
 import com.marincek.sympis.repository.UserRepositoryIntegrationTest;
@@ -18,7 +20,10 @@ import org.junit.runners.Suite;
         TokenRepositoryIntegrationTest.class,
         // unit services
         LinkServiceTest.class,
-        TokenServiceTest.class
+        TokenServiceTest.class,
+        // integration controllers
+        AuthenticationControllerIntegrationTest.class,
+        LinksControllerIntegrationTest.class
 })
 public class AppTest {
 }

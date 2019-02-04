@@ -10,9 +10,7 @@ public class AuthenticationRequest {
     @NotNull(message = "Please provide password")
     private String password;
 
-    public AuthenticationRequest() {
-
-    }
+    public AuthenticationRequest() { }
 
     public AuthenticationRequest(String username, String password) {
         this.username = username;

@@ -1,7 +1,6 @@
 package com.marincek.sympis.repository;
 
 import com.marincek.sympis.domain.User;
-import com.marincek.sympis.repository.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

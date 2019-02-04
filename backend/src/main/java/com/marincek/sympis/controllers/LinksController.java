@@ -40,10 +40,11 @@ public class LinksController {
             LinkResponse linkResponse = new LinkResponse(linksService.addLinkForUser(principal.getName() , linkRequest.convert()));
             return new ResponseEntity<>(linkResponse, HttpStatus.OK);
         } catch (MalformedURLException e) {
-            return new ResponseEntity<>(new LinkResponse("MalformedURLException"), HttpStatus.BAD_REQUEST);
+            e.printStackTrace();
+            throw new RuntimeException("Malformed URL Exception");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            return new ResponseEntity<>(new LinkResponse("UnsupportedEncodingException"), HttpStatus.BAD_REQUEST);
+            throw new RuntimeException("Unsupported Encoding Exception");
         }
     }
 

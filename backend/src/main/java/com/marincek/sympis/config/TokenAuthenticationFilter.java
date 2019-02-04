@@ -2,6 +2,7 @@ package com.marincek.sympis.config;
 
 import com.marincek.sympis.domain.AuthorizationToken;
 import com.marincek.sympis.service.TokenService;
+import com.marincek.sympis.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,12 +23,12 @@ public class TokenAuthenticationFilter extends GenericFilterBean {
 
     private final String AUTH_TOKEN_HEADER_NAME = "x-auth-token";
 
-    private UserDetailsService customUserDetailsService;
+    private UserService userDetailsService;
     private TokenService tokenService;
 
     @Autowired
-    public TokenAuthenticationFilter(UserDetailsService userDetailsService, TokenService TokenService) {
-        this.customUserDetailsService = userDetailsService;
+    public TokenAuthenticationFilter(UserService userDetailsService, TokenService TokenService) {
+        this.userDetailsService = userDetailsService;
         this.tokenService = TokenService;
     }
 
@@ -40,7 +41,7 @@ public class TokenAuthenticationFilter extends GenericFilterBean {
             if (StringUtils.hasText(authToken)) {
                 Optional<AuthorizationToken> optionalToken = tokenService.findByToken(authToken);
                 if(optionalToken.isPresent()){
-                    UserDetails userDetails = customUserDetailsService.loadUserByUsername(optionalToken.get().getUsername());
+                    UserDetails userDetails = userDetailsService.loadUserByUsername(optionalToken.get().getUsername());
                     if(userDetails!= null && optionalToken.get().getToken().equals(authToken)){
                         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
                         SecurityContextHolder.getContext().setAuthentication(token);
