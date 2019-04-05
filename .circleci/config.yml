@@ -22,9 +22,9 @@ jobs:
       TERM: dumb
 
     steps:
-      - checkout
-        path: ~/symphis
-        
+      - checkout:
+          path: ~/symphis
+
       # Download and cache dependencies
       - restore_cache:
           keys:
