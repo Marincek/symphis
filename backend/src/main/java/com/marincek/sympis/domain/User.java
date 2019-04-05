@@ -3,11 +3,12 @@ package com.marincek.sympis.domain;
 import javax.persistence.*;
 
 @Entity
+@Table(name="USERS")
 public class User {
 
     @Id
     @Column(name = "user_id")
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     private String uuid;
 

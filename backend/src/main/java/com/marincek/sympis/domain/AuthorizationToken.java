@@ -4,10 +4,11 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "AUTH_TOKENS")
 public class AuthorizationToken {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)

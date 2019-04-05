@@ -27,8 +27,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 
-	implementation group: 'com.h2database', name: 'h2', version: '1.4.197'
+	implementation group: 'org.flywaydb', name: 'flyway-core', version: '5.2.4'
+	implementation fileTree(dir: 'lib', include: ['*.jar'])
+
 
 	testImplementation 'junit:junit:4.12'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
+
