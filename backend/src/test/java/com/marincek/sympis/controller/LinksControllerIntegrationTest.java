@@ -1,6 +1,5 @@
 package com.marincek.sympis.controller;
 
-import com.marincek.sympis.BootApplication;
 import com.marincek.sympis.domain.AuthorizationToken;
 import com.marincek.sympis.service.TokenService;
 import com.marincek.sympis.service.UserService;
@@ -9,10 +8,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -20,13 +20,12 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.GenericFilterBean;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -35,9 +34,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Jan Marinchek
  */
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = { BootApplication.class })
+@SpringBootTest
 @WebAppConfiguration
 @DirtiesContext(classMode= DirtiesContext.ClassMode.AFTER_CLASS)
+@AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
+@Transactional
 public class LinksControllerIntegrationTest{
 
     private String BASE_LINKS_URL = "/space/links";

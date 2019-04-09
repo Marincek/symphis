@@ -1,3 +1,5 @@
+CREATE sequence hibernate_sequence;
+
 CREATE TABLE USERS(
     user_id bigint NOT NULL,
     email character varying(255)  NOT NULL,

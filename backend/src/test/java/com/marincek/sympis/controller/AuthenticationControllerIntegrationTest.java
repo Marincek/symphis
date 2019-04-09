@@ -1,17 +1,19 @@
 package com.marincek.sympis.controller;
 
-import com.marincek.sympis.BootApplication;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import javax.transaction.Transactional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -22,9 +24,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Jan Marinchek
  */
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = { BootApplication.class })
+@SpringBootTest
 @WebAppConfiguration
 @DirtiesContext(classMode= DirtiesContext.ClassMode.AFTER_CLASS)
+@AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
+@Transactional
 public class AuthenticationControllerIntegrationTest {
 
     private String CONTENT_TYPE_HEADER = "Content-Type";
