@@ -1,0 +1,6 @@
+
+INSERT INTO LINKS VALUES (402, 'https://testdata.javacodegeeks.com/core-java/java-state-design-pattern-example/' , 101) ON CONFLICT DO NOTHING;
+INSERT INTO TAGS VALUES (402, 'pattern-test' ) ON CONFLICT DO NOTHING;
+INSERT INTO TAGS VALUES (402, 'java-test' ) ON CONFLICT DO NOTHING;
+INSERT INTO TAGS VALUES (402, 'design-test' ) ON CONFLICT DO NOTHING;
+INSERT INTO TAGS VALUES (402, 'state-test' ) ON CONFLICT DO NOTHING;
