@@ -47,7 +47,7 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value = "/login", method = {RequestMethod.POST})
-    public ResponseEntity<UserInfoResponse> login(@RequestBody @Valid AuthenticationRequest authenticationRequest) {
+    ResponseEntity<UserInfoResponse> login(@RequestBody @Valid AuthenticationRequest authenticationRequest) {
         try {
             String username = authenticationRequest.getUsername();
             String password = authenticationRequest.getPassword();

@@ -1,5 +1,6 @@
 package com.marincek.sympis.repository;
 
+import com.marincek.sympis.BaseDatabaseIntegrationTest;
 import com.marincek.sympis.domain.AuthorizationToken;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
-public class TokenRepositoryIntegrationTest {
+public class TokenRepositoryIntegrationTest extends BaseDatabaseIntegrationTest {
 
     @Autowired
     private TestEntityManager entityManager;

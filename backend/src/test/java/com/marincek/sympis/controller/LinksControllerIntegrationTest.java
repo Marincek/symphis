@@ -1,5 +1,6 @@
 package com.marincek.sympis.controller;
 
+import com.marincek.sympis.BaseDatabaseIntegrationTest;
 import com.marincek.sympis.domain.AuthorizationToken;
 import com.marincek.sympis.service.TokenService;
 import com.marincek.sympis.service.UserService;
@@ -41,7 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
 @TestPropertySource(locations="classpath:application-test.properties")
 @Transactional
-public class LinksControllerIntegrationTest{
+public class LinksControllerIntegrationTest extends BaseDatabaseIntegrationTest {
 
     private String BASE_LINKS_URL = "/space/links";
     private String TOKEN_TESTING = "some_generated_token";

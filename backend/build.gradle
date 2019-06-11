@@ -33,5 +33,9 @@ dependencies {
 
 	testImplementation 'junit:junit:4.12'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	compile group: 'org.testcontainers', name: 'testcontainers', version: '1.11.3'
+	testCompile group: 'org.testcontainers', name: 'postgresql', version: '1.11.3'
+
 }
 

@@ -1,5 +1,6 @@
 package com.marincek.sympis.controller;
 
+import com.marincek.sympis.BaseDatabaseIntegrationTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DirtiesContext(classMode= DirtiesContext.ClassMode.AFTER_CLASS)
 @AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
 @Transactional
-public class AuthenticationControllerIntegrationTest {
+public class AuthenticationControllerIntegrationTest extends BaseDatabaseIntegrationTest {
 
     private String CONTENT_TYPE_HEADER = "Content-Type";
     private String CONTENT_TYPE_HEADER_VALUE = "application/json";

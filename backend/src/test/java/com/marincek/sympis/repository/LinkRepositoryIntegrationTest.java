@@ -1,16 +1,22 @@
 package com.marincek.sympis.repository;
 
+import com.marincek.sympis.BaseDatabaseIntegrationTest;
 import com.marincek.sympis.domain.Link;
 import com.marincek.sympis.domain.User;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.util.TestPropertyValues;
+import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.testcontainers.containers.PostgreSQLContainer;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,7 +28,7 @@ import static org.junit.Assert.assertNull;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
-public class LinkRepositoryIntegrationTest {
+public class LinkRepositoryIntegrationTest extends BaseDatabaseIntegrationTest {
 
     @Autowired
     private TestEntityManager entityManager;
