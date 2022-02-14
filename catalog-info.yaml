@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: symphis
+  annotations:
+    github.com/project-slug: Marincek/symphis
+spec:
+  type: other
+  lifecycle: unknown
+  owner: team-jan
