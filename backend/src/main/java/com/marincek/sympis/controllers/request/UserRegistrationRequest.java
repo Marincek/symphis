@@ -7,26 +7,26 @@ import javax.validation.constraints.NotNull;
 
 public class UserRegistrationRequest {
 
-    @NotNull(message = "Please provide username")
+    @NotNull (message = "Please provide username")
     private String username;
-    @NotNull(message = "Please provide password")
+    @NotNull (message = "Please provide password")
     private String password;
-    @NotNull(message = "Please provide email")
+    @NotNull (message = "Please provide email")
     @Email
     private String email;
     private String firstName;
     private String lastName;
 
     public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
+        return this.username;
     }
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPassword() {
+        return this.password;
     }
 
     public void setPassword(String password) {
@@ -34,7 +34,7 @@ public class UserRegistrationRequest {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -42,7 +42,7 @@ public class UserRegistrationRequest {
     }
 
     public String getFirstName() {
-        return firstName;
+        return this.firstName;
     }
 
     public void setFirstName(String firstName) {
@@ -50,7 +50,7 @@ public class UserRegistrationRequest {
     }
 
     public String getLastName() {
-        return lastName;
+        return this.lastName;
     }
 
     public void setLastName(String lastName) {
@@ -59,11 +59,11 @@ public class UserRegistrationRequest {
 
     public User toUser() {
         User user = new User();
-        user.setEmail(email);
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
+        user.setEmail(this.email);
+        user.setUsername(this.username);
+        user.setPassword(this.password);
+        user.setFirstName(this.firstName);
+        user.setLastName(this.lastName);
         return user;
     }
 }

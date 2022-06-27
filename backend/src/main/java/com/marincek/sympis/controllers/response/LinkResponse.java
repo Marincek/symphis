@@ -6,9 +6,9 @@ import java.util.List;
 
 public class LinkResponse {
 
-    private Long id;
-    private String url;
-    private List<String> tags;
+    private final Long id;
+    private final String url;
+    private final List<String> tags;
 
     public LinkResponse(Link link) {
         this.id = link.getId();
@@ -17,14 +17,14 @@ public class LinkResponse {
     }
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public String getUrl() {
-        return url;
+        return this.url;
     }
 
     public List<String> getTags() {
-        return tags;
+        return this.tags;
     }
 }

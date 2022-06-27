@@ -8,40 +8,12 @@ import java.net.*;
 import java.util.*;
 
 /**
- * OracleUrlNormalizer is custom implemetation of UrlNormalizer
- * it uses URL to parse and normalise the string URL
- * all parameters in the URL all put im sorted map and append at the final normalised URL
+ * OracleUrlNormalizer is custom implemetation of UrlNormalizer.
+ * it uses URL to parse and normalise the string URL.
+ * all parameters in the URL all put im sorted map and append at the final normalised URL.
  */
 @Component
 public class OracleUrlNormalizer implements UrlNormalizer {
-
-    public String normalize(String taintedURL) throws MalformedURLException, UnsupportedEncodingException {
-        taintedURL = URLDecoder.decode(taintedURL, "UTF-8");
-
-        final URL url;
-        try {
-            url = new URI(taintedURL).normalize().toURL();
-        } catch (URISyntaxException | IllegalArgumentException e) {
-            throw new MalformedURLException(e.getMessage());
-        }
-
-        final String path = url.getPath().replace("/$", "");
-        final SortedMap<String, String> params = createParameterMap(url.getQuery());
-        final int port = url.getPort();
-        final String queryString;
-
-        if (params != null) {
-            // Some params are only relevant for user tracking, so remove the most commons ones.
-            params.keySet().removeIf(key -> key.startsWith("utm_") || key.contains("session"));
-            queryString = "?" + canonicalize(params);
-        } else {
-            queryString = "";
-        }
-
-        return url.getProtocol() + "://" + url.getHost().replace("www.","")
-                + (port != -1 && port != 80 ? ":" + port : "")
-                + path + queryString;
-    }
 
     /**
      * Takes a query string, separates the constituent name-value pairs, and
@@ -129,5 +101,33 @@ public class OracleUrlNormalizer implements UrlNormalizer {
         } catch (UnsupportedEncodingException e) {
             return string;
         }
+    }
+
+    public String normalize(String taintedURL) throws MalformedURLException, UnsupportedEncodingException {
+        taintedURL = URLDecoder.decode(taintedURL, "UTF-8");
+
+        final URL url;
+        try {
+            url = new URI(taintedURL).normalize().toURL();
+        } catch (URISyntaxException | IllegalArgumentException e) {
+            throw new MalformedURLException(e.getMessage());
+        }
+
+        final String path = url.getPath().replace("/$", "");
+        final SortedMap<String, String> params = createParameterMap(url.getQuery());
+        final int port = url.getPort();
+        final String queryString;
+
+        if (params != null) {
+            // Some params are only relevant for user tracking, so remove the most commons ones.
+            params.keySet().removeIf(key -> key.startsWith("utm_") || key.contains("session"));
+            queryString = "?" + canonicalize(params);
+        } else {
+            queryString = "";
+        }
+
+        return url.getProtocol() + "://" + url.getHost().replace("www.", "")
+                + (port != -1 && port != 80 ? ":" + port : "")
+                + path + queryString;
     }
 }

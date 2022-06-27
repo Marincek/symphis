@@ -37,7 +37,7 @@ public class DefaultLinkService implements LinkService {
     @Override
     public Link addLink(Link link) throws MalformedURLException, UnsupportedEncodingException {
         link.setUrl(urlNormalizer.normalize(link.getUrl()));
-        if(linkRepository.findByUserAndUrl(link.getUser().getUsername(), link.getUrl()) != null){
+        if (linkRepository.findByUserAndUrl(link.getUser().getUsername(), link.getUrl()) != null) {
             throw new ExistingUrlException();
         }
         return linkRepository.save(link);

@@ -30,7 +30,7 @@ public class TokenRepositoryIntegrationTest {
     @Test
     public void testTokenFindByUsername() {
         // given
-        AuthorizationToken authorizationToken = new AuthorizationToken("therock","random_token",new Date());
+        AuthorizationToken authorizationToken = new AuthorizationToken("therock", "random_token", new Date());
         entityManager.persist(authorizationToken);
         entityManager.flush();
 
@@ -90,7 +90,7 @@ public class TokenRepositoryIntegrationTest {
     @Test
     public void testDeleteByUsername() {
         // given
-        AuthorizationToken authorizationToken = new AuthorizationToken("therock","random_token",new Date());
+        AuthorizationToken authorizationToken = new AuthorizationToken("therock","random_token", new Date());
         entityManager.persist(authorizationToken);
         entityManager.flush();
 
@@ -107,7 +107,7 @@ public class TokenRepositoryIntegrationTest {
     @Transactional
     public void testUpdateToken() {
         // given
-        AuthorizationToken authorizationToken = new AuthorizationToken("therock","random_token",new Date());
+        AuthorizationToken authorizationToken = new AuthorizationToken("therock",  "random_token",new Date());
         entityManager.persist(authorizationToken);
         entityManager.flush();
 

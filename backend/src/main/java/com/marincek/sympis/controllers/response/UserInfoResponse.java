@@ -14,6 +14,7 @@ public class UserInfoResponse {
         this.firstName = firstName;
         this.token = token;
     }
+
     public String getToken() {
         return this.token;
     }

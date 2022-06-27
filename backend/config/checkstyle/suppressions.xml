@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+		"-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+		"https://checkstyle.org/dtds/suppressions_1_2.dtd">
+<suppressions>
+	<suppress files="package-info\.java" checks=".*"/>
+	<suppress checks="[a-zA-Z0-9]*" files="[\\/]test[\\/]" />
+	<suppress files="[\\/]test[\\/]" checks="RequireThis"/>
+	<suppress files="[\\/]test[\\/]" checks="Javadoc*"/>
+	<suppress checks="HideUtilityClassConstructor" files=".*Application.java"/>
+	<suppress files="KafkaMatchersTests" checks="RegexpSinglelineJava"/>
+	<suppress files="(DeserializationException|ConversionException)" checks="MutableException"/>
+	<suppress files="[\\/]kafka.jdocs[\\/]" checks="Regexp*"/>
+	<suppress files="[\\/]kafka.kdocs[\\/]" checks="Regexp*"/>
+</suppressions>

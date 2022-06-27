@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/space/links", produces = "application/json" , consumes = "application/json")
+@RequestMapping (value = "/space/links", produces = "application/json", consumes = "application/json")
 public class LinksController {
 
     private LinkService linksService;
@@ -37,7 +37,7 @@ public class LinksController {
     @RequestMapping(method = {RequestMethod.POST})
     public ResponseEntity<LinkResponse> addLink(Principal principal, @Valid @RequestBody LinkRequest linkRequest) {
         try {
-            LinkResponse linkResponse = new LinkResponse(linksService.addLinkForUser(principal.getName() , linkRequest.convert()));
+            LinkResponse linkResponse = new LinkResponse(linksService.addLinkForUser(principal.getName(), linkRequest.convert()));
             return new ResponseEntity<>(linkResponse, HttpStatus.OK);
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -48,7 +48,7 @@ public class LinksController {
         }
     }
 
-    @RequestMapping(value="/tags", method = {RequestMethod.GET})
+    @RequestMapping (value = "/tags", method = {RequestMethod.GET})
     public ResponseEntity<List<String>> getTagsForUrl(@RequestParam("url") String url) {
         try {
             return new ResponseEntity<>(linksService.findAllTagsForUrl(url), HttpStatus.OK);
@@ -58,7 +58,7 @@ public class LinksController {
         }
     }
 
-    @RequestMapping(value="/{id}", method = {RequestMethod.DELETE})
+    @RequestMapping (value = "/{id}", method = {RequestMethod.DELETE})
     public ResponseEntity deleteLink(@PathVariable("id") Long id) {
         try {
             linksService.delete(id);
@@ -68,9 +68,6 @@ public class LinksController {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
     }
-
-
-
 
 
 }

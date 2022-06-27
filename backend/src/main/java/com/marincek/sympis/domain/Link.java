@@ -7,19 +7,19 @@ import java.util.List;
 public class Link {
 
     @Id
-    @Column(name = "link_id")
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column (name = "link_id")
+    @GeneratedValue (strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false)
     private String url;
 
     @ElementCollection
-    @CollectionTable(
-            name="TAGS",
-            joinColumns=@JoinColumn(name="link_id")
+    @CollectionTable (
+            name = "TAGS",
+            joinColumns = @JoinColumn (name = "link_id")
     )
-    @Column(name="tag")
+    @Column (name = "tag")
     private List<String> tags;
 
     @ManyToOne

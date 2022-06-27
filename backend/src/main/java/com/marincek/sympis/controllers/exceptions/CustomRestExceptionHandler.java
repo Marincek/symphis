@@ -59,13 +59,13 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 //        return handleRuntimeExceptions(ex);
 //    }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleExceptions(Exception ex){
+    @ExceptionHandler (Exception.class)
+    public ResponseEntity<Object> handleExceptions(Exception ex) {
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), ex.getMessage());
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 
-    @ExceptionHandler({ConstraintViolationException.class})
+    @ExceptionHandler ({ConstraintViolationException.class})
     public ResponseEntity<Object> handleConstraintViolation(ConstraintViolationException ex, WebRequest request) {
         List<String> errors = new ArrayList<String>();
         for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {

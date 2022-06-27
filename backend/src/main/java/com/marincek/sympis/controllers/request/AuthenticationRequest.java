@@ -5,12 +5,13 @@ import javax.validation.constraints.NotNull;
 
 public class AuthenticationRequest {
 
-    @NotNull(message = "Please provide username")
+    @NotNull (message = "Please provide username")
     private String username;
-    @NotNull(message = "Please provide password")
+    @NotNull (message = "Please provide password")
     private String password;
 
-    public AuthenticationRequest() { }
+    public AuthenticationRequest() {
+    }
 
     public AuthenticationRequest(String username, String password) {
         this.username = username;

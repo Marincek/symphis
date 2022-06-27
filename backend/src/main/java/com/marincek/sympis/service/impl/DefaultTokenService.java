@@ -28,11 +28,11 @@ public class DefaultTokenService implements TokenService {
     @Override
     public AuthorizationToken refreshToken(String username, String oldToken) {
         Optional<AuthorizationToken> dbAuthorizationTokenOptional = tokenRepository.findByUsername(username);
-        if(dbAuthorizationTokenOptional.isPresent() && oldToken.equals(dbAuthorizationTokenOptional.get().getToken())){
+        if (dbAuthorizationTokenOptional.isPresent() && oldToken.equals(dbAuthorizationTokenOptional.get().getToken())) {
             tokenRepository.delete(dbAuthorizationTokenOptional.get());
             return createToken(username);
-        }else {
-            throw new RuntimeException("User "+username+" have 0 old tokens");
+        } else {
+            throw new RuntimeException("User " + username + " have 0 old tokens");
         }
     }
 
@@ -46,7 +46,7 @@ public class DefaultTokenService implements TokenService {
         return tokenRepository.findByToken(token);
     }
 
-    private String generateToken(){
-        return UUID.randomUUID().toString()+System.currentTimeMillis();
+    private String generateToken() {
+        return UUID.randomUUID().toString() + System.currentTimeMillis();
     }
 }

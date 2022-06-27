@@ -5,7 +5,6 @@ import com.marincek.sympis.domain.Link;
 import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 public class LinkRequest {
@@ -25,7 +24,7 @@ public class LinkRequest {
         return tags;
     }
 
-    public Link convert(){
-        return new Link(url,tags);
+    public Link convert() {
+        return new Link(url, tags);
     }
 }

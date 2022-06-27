@@ -7,7 +7,7 @@ import java.util.Date;
 public class AuthorizationToken {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false)
@@ -32,28 +32,28 @@ public class AuthorizationToken {
         return id;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public Date getLastUsed() {
-        return lastUsed;
-    }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
     }
 
+    public String getToken() {
+        return token;
+    }
+
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public Date getLastUsed() {
+        return lastUsed;
     }
 
     public void setLastUsed(Date lastUsed) {

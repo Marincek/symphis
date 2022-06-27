@@ -18,9 +18,9 @@ public interface LinkRepository extends JpaRepository<Link, Long> {
         GROUP BY TAGS.TAG
         ORDER BY COUNT(*) DESC;
      */
-    @Query("SELECT t FROM Link l LEFT JOIN l.tags t WHERE l.url = :url GROUP BY t ORDER BY COUNT(*) DESC")
-    List<String> findAllTagsForUrl(@Param("url") String url);
+    @Query ("SELECT t FROM Link l LEFT JOIN l.tags t WHERE l.url = :url GROUP BY t ORDER BY COUNT(*) DESC")
+    List<String> findAllTagsForUrl(@Param ("url") String url);
 
-    @Query("SELECT l FROM Link l WHERE l.user.username = :username AND l.url = :url")
-    Link findByUserAndUrl(@Param("username") String username,@Param("url") String url);
+    @Query ("SELECT l FROM Link l WHERE l.user.username = :username AND l.url = :url")
+    Link findByUserAndUrl(@Param ("username") String username, @Param ("url") String url);
 }
